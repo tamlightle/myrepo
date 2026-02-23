@@ -1,0 +1,28 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhdmVsX2p1bXBzIDwtIHNlcShmcm9tID0gMTg4NywgdG8gPSAyMDUyLCBieSA9IDMzKVxudHJhdmVsX2p1bXBzX3NhbXBsZSA8LSBzYW1wbGUodHJhdmVsX2p1bXBzLCBzaXplID0gNSwgcmVwbGFjZSA9IFRSVUUpXG5tZWFuKHRyYXZlbF9qdW1wc19zYW1wbGUpXG5cbm1lYW4oc2FtcGxlKHRyYXZlbF9qdW1wcywgc2l6ZSA9IDUsIHJlcGxhY2UgPSBUUlVFKSlcblxubWVhbihzYW1wbGUoc2VxKGZyb20gPSAxODg3LCB0byA9IDIwNTIsIGJ5ID0gMzMpLCBzaXplID0gNSwgcmVwbGFjZSA9IFRSVUUpKVxuXG4/c2FtcGxlXG5gYGAifQ== -->
+
+```r
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)
+travel_jumps_sample <- sample(travel_jumps, size = 5, replace = TRUE)
+mean(travel_jumps_sample)
+
+mean(sample(travel_jumps, size = 5, replace = TRUE))
+
+mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
+
+?sample
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)
+travel_jumps_sample <- sample(travel_jumps, size = 5, replace = TRUE)
+mean(travel_jumps_sample)
+
+mean(sample(travel_jumps, size = 5, replace = TRUE))
+
+mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
+
+?sample
+```"

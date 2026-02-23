@@ -1,0 +1,95 @@
+---
+title: "Chapter 6 Notes"
+date: "`r Sys.Date()`"
+output: html_notebook
+---
+
+# Special values
+
+```{r}
+0/0 # Produces NaN - undefined arithmetic
+
+NA # Built-in constant representing a missing value
+```
+# Built-in functions
+
+```{r}
+mean
+
+cursed_seq <- c(4, 8, 15 ,16 ,23 ,42)
+
+mean(cursed_seq)
+```
+# Help files
+
+```{r}
+Sys.Date()
+
+?Sys.Date()
+```
+
+```{r}
+?mean
+```
+
+```{r}
+cursed_seq <- c(4, 8, 15, 16, 23, 42, NA)
+
+cursed_seq <- c(cursed_seq, NA, NA)
+
+mean(cursed_seq)
+
+mean(cursed_seq, na.rm = TRUE)
+```
+```{r}
+Vector_NA <- c(3, 7, NA, 12)
+
+anyNA(Vector_NA)
+
+is.na(Vector_NA)
+
+logical_NA <- is.na(Vector_NA)
+
+which(logical_NA)
+```
+# Nesting function calls
+
+```{r}
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)
+travel_jumps_sample <- sample(travel_jumps, size = 5, replace = TRUE)
+mean(travel_jumps_sample)
+
+mean(sample(travel_jumps, size = 5, replace = TRUE))
+
+mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
+
+?sample
+```
+
+```{r}
+set.seed(100)
+LargeVec <- sample(c(1:10, rep(NA, 10)))
+print(LargeVec)
+
+which(is.na(LargeVec))
+```
+
+```{r}
+sum(is.na(LargeVec))
+
+mean(is.na(LargeVec))
+```
+```{r}
+clean_vec <- LargeVec[!is.na(LargeVec)]
+clean_vec
+```
+
+```{r}
+imputed <- LargeVec
+
+imputed[is.na(imputed)] <- mean(imputed, na.rm = TRUE)
+
+sum(is.na(LargeVec))
+sum(is.na(imputed))
+```
+

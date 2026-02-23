@@ -1,0 +1,180 @@
+---
+title: "Chapter 6 Practice"
+author: "Jane Goodall"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+## Task 1
+
+🎯 First I opened the help file
+
+```{r}
+# ⚡
+# ?rnorm
+```
+
+🗣 In the Usage line, anything with an `=` shows a default value (optional), and anything without an `=` is required.
+
+Here is the Usage line (copied from the help page):
+
+`rnorm(n, mean = 0, sd = 1)`
+
+- `n` is required (no `=`)
+
+- `mean` and `sd` has a = sign showing the default values. 
+
+🗣 I like this one because it’s super clear. Like it literally tells you the “default normal distribution” is mean 0 and sd 1 unless you change it. Also this is the first time I’m realizing the help file is basically R telling you “here’s what I’ll do if you don’t specifiy stuff.”
+
+
+## Task 2
+
+🎯 Build lab reading + insert 3 missing values
+
+```{r}
+# ⚡
+set.seed(11)
+
+lab_readings <- round(runif(n = 40, min = 0.20, max = 0.95), 2)
+# labs_reading typo - fixed to lab_readings
+na_pos <- sample(seq_along(lab_readings), size = 3, replace = FALSE)
+lab_readings[na_pos] <- NA
+
+length(lab_readings)     
+sum(is.na(lab_readings)) 
+lab_readings
+```
+
+🗣 This feels more “science-y” than the other one because these look like actual measurments (even tho they’re fake). I rounded them because otherwise you get like a million decimals and it’s hard to read. Also I like that the `NA`s are in random spots (not just stuck at the end), because in real data you usually don’t get missing values in a perfect pattern.
+
+## Task 3
+
+🎯 Count missing values + show how defaults affect results
+
+```{r}
+# ⚡
+n_missing <- sum(is.na(lab_readings))
+n_missing
+```
+
+```{r}
+# ⚡
+range_raw <- range(lab_readings)
+range_raw
+```
+
+```{r}
+# ⚡
+range_clean <- range(lab_readings, na.rm = TRUE)
+range_clean
+```
+
+🗣 This is kinda annoying but also makes sense. If R doesn’t know a value, it can’t promise what the range is. The “default” thing is really the whole point here: if I forget `na.rm = TRUE` it doesn’t throw an error, it just gives me NA and I might be like “welp.” So I need to actually check missingness on purpose.
+
+## Task 4
+
+🎯 Locate the missing positions (indices)
+
+```{r}
+# ⚡
+is_missing <- is.na(lab_readings)
+missing_positions <- seq_along(lab_readings)[is_missing]
+```
+
+```{r}
+# ✅ Check
+is_missing
+missing_positions
+length(missing_positions)
+```
+
+🗣 The logical vector is like a mask, which is pretty cool because it’s the same length as the data and lines up position-by-position. Then the `seq_along(...)[mask]` thing basically turns the TRUE spots into index numbers. Also I noticed the missing ones are not at the end (because we inserted them randomly), which is more realistic and also harder because you actually have to go find them.
+
+## Task 5
+
+🎯 Nest `na.omit()` inside `sample()` so the sample cannot pull `NA` at all.
+
+```{r}
+# ⚡
+set.seed(21)
+
+mean_of_eight <- mean(sample(na.omit(lab_readings), size = 8, replace = TRUE))
+sd_of_six <- sd(sample(na.omit(lab_readings), size = 6, replace = TRUE))
+
+# ✅ Check
+mean_of_eight
+sd_of_six
+```
+
+🗣 Nesting is starting to click more now. It’s like: first remove the missing values (`na.omit()`), then sample, then feed that into `mean()` or `sd()`. I like this because it doesn’t rely on me remembering `na.rm = TRUE` every time. It's like the missing values are gone before I even sample. Also sd feels a little “pickier” than mean so it was good to test both.
+
+## Task 6
+
+🎯 Create two separate objects:
+
+- `run_stamp` using `date()`
+
+- `run_timezone` using `Sys.timezone()`
+
+```{r}
+# ⚡
+run_stamp <- date()         
+run_timezone <- Sys.timezone()
+
+run_stamp
+run_timezone
+```
+
+🗣 Ok this one surprised me because timezone is actually info I never think about until something breaks. But I can see why it matters if you’re sharing files or working with other people. The date is also just nice for being like “when did I even do this.”
+
+
+## Task 7
+
+### Part A
+
+🎯 Create `lab_clean` by keeping only non-missing values in labs, then verify the lengths.
+
+```{r}
+# ⚡
+lab_clean <- lab_readings[!is.na(lab_readings)]
+
+# ✅ Checks
+length(lab_readings)       
+length(lab_clean) 
+
+```
+
+🗣 `lab_readings[!is.na(lab_readings)]` uses logical indexing to keep only values that are not missing, and `!` flips the `TRUE`/`FALSE` so the “good values” become `TRUE` and get kept.
+
+
+### Part B
+
+🎯 Make a copy `lab_imputed`, then replace missing values with the median of observed values, and verify missingness is gone.
+
+```{r}
+# ⚡
+lab_imputed <- lab_readings
+
+lab_imputed[is.na(lab_imputed)] <- median(lab_imputed, na.rm = TRUE)
+```
+
+```{r}
+# ✅ Checks
+sum(is.na(lab_imputed))
+median(lab_imputed)
+length(lab_imputed)
+# moved length(lab_imputed) to this code block because it is after creating the lab_imputed variable.
+```
+
+🗣 Removing `NA`’s is the simplest, but it’s also kinda like “pretend those people didn’t exist” which might be bad depending on the study. Imputing feels weird too because you’re filling in values that aren’t real, but median feels less extreme than mean if there’s outliers. Also I’m glad we copy first because I would 100% overwrite it and then be like “wait what was the original.”
+
+
+## Task 8
+
+Reflection
+
+A function object (like `mean`) is the stored tool itself, but a function call (like `mean(lab_clean)`) is when you actually run the tool on specific data to get an output.
+

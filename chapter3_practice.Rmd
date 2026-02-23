@@ -1,0 +1,204 @@
+---
+title: "Chapter 3 Practice"
+output: html_notebook
+---
+
+Goal: Practice creating vectors and doing arithmetic
+Verify: I should see three outputs: x+y, x*2, and x/y
+
+```{r 2.5 Run Code Chunks}
+x <- c(2, 4, 6)
+y <- c(1, 3, 5)
+
+x + y
+x * 2
+x / y
+```
+```{r 3.0.1 Recycling Vecotrs}
+numbers3 <- c(1.5, 2.5, -3.5)
+combination <- c(1, 2, 3, 4, 5)
+recycled_result <- numbers3 + combination
+
+print(recycled_result)
+
+long <- c(6, 2, 8, 10, 3, 77)
+short <- c(88, 4, 20)
+difference <- long - short
+
+print(difference)
+```
+Memo: R recycles the shorter vector when adding and subtracting. A warning appears when the longer length is not a multiple of the shorter length, but this does not create a hard-stop error.
+
+```{r 5.1 Class and Behavior}
+today <- as.Date("2026-01-20")
+mode(today)
+class(today)
+
+today + 7
+```
+```{r 5.3 Character strings}
+first_word <- "yellow"
+second_word <- "banana"
+
+sentence <- paste(first_word,second_word)
+sentence
+
+class(sentence)
+
+first_names <- c("Demi", "Snoop", "Ed")
+last_names <- c("Moore", "Dogg", "Sheeran")
+full_names <- paste(first_names, last_names)
+full_names
+
+```
+Memo: I wasn't expecting a space between the two words pasted together, but now I see that paste0 eliminates that space.
+
+```{r 5.4.1 Creating Factors}
+grades <- c("A", "B", "C", "A", "B", "A")
+grades <- factor(grades)
+
+mode(grades)
+class(grades)
+print(grades)
+```
+```{r 5.4.2 Levels and Ordering}
+sizes <- c("Medium", "Large", "Small", "Medium", "Large")
+sizes <- factor(sizes, levels = c("Small", "Medium", "Large"))
+
+print(sizes)
+```
+```{r 5.4.3 Data Coercion}
+mixed <- c("candy", 4, "book", 92)
+class(mixed)
+
+as.numeric(c("1", "2", "3"))
+as.numeric(mixed)
+```
+
+```{r 5.5 Named Vectors}
+nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F",
+                   "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3")
+print(nerdy_palette)
+names(nerdy_palette)
+
+nerdy_palette["Octarine"]
+
+nerdy_palette[c("Octarine", "TARDIS Blue", "NotAColor")]
+
+nerdy_palette[c(1,3)]
+```
+Memo: Looks like indexing starts at 1, not zero
+
+```{r 6 Logical Vectors}
+real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
+print(real)
+
+logicals <- c(1 > 2, 3 < 5, 4 == 4)
+print(logicals)
+```
+```{r 7 Lists}
+taylor_swift_list <- list(
+  name = "Taylor Swift",
+  albums = c("Fearless", "Red", "1989", "folklore", "Midnights"),
+  release_years = c(2008, 2012, 2014, 2020, 2022),
+  album_of_the_year_wins = c(TRUE, FALSE, TRUE, TRUE, FALSE),
+  favorite_song = list(
+    title = "All Too Well (10 Minute Version)",
+    album = "Red",
+    length_minutes = 10.13
+  ) 
+)
+
+print(taylor_swift_list)
+```
+# Practice Space
+### 10.1 Task 1
+Building numeric vectors
+```{r 10.1 Task 1}
+sales_q1 <- c(5, 10, 15, 20)
+sales_q2 <- c(1, 2, 3, 4)
+
+print(sales_q1)
+print(sales_q2)
+
+length(sales_q1)
+length(sales_q2)
+
+```
+The output shows two vectors, both with a length of 4.
+
+### 10.2 Task 2
+Vector arithmetic
+```{r 10.2 Task 2}
+growth <- sales_q2 - sales_q1
+growth
+```
+The output shows a decrease in sales from Q1 to Q2.
+
+### 10.3 Task 3
+Exponents and vectorized math
+```{r 10.3 Task 3}
+exponents <- c(0:10)
+binary_powers <- 2 ^ exponents
+
+length(binary_powers)
+```
+The output shows 11 elements (values) in the `binary_powers` vector.
+
+### 10.4 Task 4
+Element-wise subtraction
+```{r 10.4 Task 4}
+cursed_seq <- c(4L, 8L, 15L, 16L, 23L, 42L)
+travel_jumps <- seq(from = 1887, to = 2052, by = 33)
+
+anomaly <- travel_jumps - cursed_seq
+print(anomaly)
+```
+The output shows the `anomaly`, or difference between the `travel_jumps` vector and the `cursed_seq` vector.
+
+### 10.5 Task 5
+Indexing named vectors
+```{r 10.5 Task 5}
+nerdy_palette <- c(
+  "Octarine" = "#7F00FF",
+  "TARDIS Blue" = "#003B6F",
+  "Rebeccapurple" = "#663399",
+  "Hooloovoo" = "#4F97A3",
+  "Cosmic Latte" = "#FFF8E7",
+  "Vantablack" = "#000000",
+  "Matrix Green" = "#03A062",
+  "Source Engine Magenta" = "#FF00FF",
+  "Command Red" = "#CC0000",
+  "Impossible Green" = "#4D9E68"
+)
+
+# nerdy_palette[c(7, 9)]
+nerdy_palette[c("Matrix Green", "Command Red")]
+```
+Memo: First, I misread the instructions and indexed by the position, not the title. When I read Task 6 and realized that was in the next task, I returned to this task and changed nerdy_palette[c(7, 9)] to nerdy_palette[c("Matrix Green", "Command Red")] to retrieve the hex code using the color names.
+
+### 10.6 Task 6
+Indexing by position
+```{r 10.6 Task 6}
+nerdy_palette[c(2, 4, 6)]
+```
+Memo: This output is what I was expecting. Remember that vectors start indexing at "1", and not "0".
+
+### 10.7 Task 7
+Logical filtering + indexing practice
+```{r 10.7 Task 7}
+positive_growth <- growth[growth > 0]
+last_two <- sales_q2[c(3, 4)]
+
+print(positive_growth)
+print(last_two)
+```
+The output shows that there were no values of positive growth between Q1 and Q2. It also shows that the last two values of `sales_q2` are 3 and 4.
+
+Memo: This result was what I was expecting. Too bad there weren't any growth values greater than zero to illustrate `positive_growth`. Not a great quarter for business, hopefully Q3 sees an uptick in sales otherwise it is going to be a very rough year.
+
+### 10.8 Task 8
+Reflection: Numeric values may be coerced to character when mixed inside a single vector because characters are the most inclusive and flexible type, and therefore no values will become NA.
+
+### 10.9 Task 9
+Done!

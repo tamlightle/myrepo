@@ -1,0 +1,36 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3Vyc2VkX3NlcSA8LSBjKDQsIDgsIDE1LCAxNiwgMjMsIDQyLCBOQSlcblxuY3Vyc2VkX3NlcSA8LSBjKGN1cnNlZF9zZXEsIE5BLCBOQSlcblxubWVhbihjdXJzZWRfc2VxKVxuYGBgIn0= -->
+
+```r
+cursed_seq <- c(4, 8, 15, 16, 23, 42, NA)
+
+cursed_seq <- c(cursed_seq, NA, NA)
+
+mean(cursed_seq)
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+cursed_seq <- c(4, 8, 15, 16, 23, 42, NA)
+
+cursed_seq <- c(cursed_seq, NA, NA)
+
+mean(cursed_seq)
+```"
+"1","[1] NA
+"
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihjdXJzZWRfc2VxLCBuYS5ybSA9IFRSVUUpXG5gYGAifQ== -->
+
+```r
+mean(cursed_seq, na.rm = TRUE)
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+mean(cursed_seq, na.rm = TRUE)
+```"
+"1","[1] 18
+"

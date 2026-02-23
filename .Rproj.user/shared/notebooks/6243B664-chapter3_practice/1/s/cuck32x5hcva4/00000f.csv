@@ -1,0 +1,8 @@
+"0","exponents <- c(0:10)"
+"0","binary_powers <- 2 ^ exponents"
+"0",""
+"0","length(binary_powers)"
+"1","[1]"
+"1"," 11"
+"1","
+"

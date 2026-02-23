@@ -1,0 +1,36 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW1wdXRlZCA8LSBMYXJnZVZlY1xuXG5pbXB1dGVkW2lzLm5hKGltcHV0ZWQpXSA8LSBtZWFuKGltcHV0ZWQsIG5hLnJtID0gVFJVRSlcblxuc3VtKGlzLm5hKExhcmdlVmVjKSlcbmBgYCJ9 -->
+
+```r
+imputed <- LargeVec
+
+imputed[is.na(imputed)] <- mean(imputed, na.rm = TRUE)
+
+sum(is.na(LargeVec))
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+imputed <- LargeVec
+
+imputed[is.na(imputed)] <- mean(imputed, na.rm = TRUE)
+
+sum(is.na(LargeVec))
+```"
+"1","[1] 10
+"
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGlzLm5hKGltcHV0ZWQpKVxuYGBgIn0= -->
+
+```r
+sum(is.na(imputed))
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+sum(is.na(imputed))
+```"
+"1","[1] 0
+"

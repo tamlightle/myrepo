@@ -1,0 +1,36 @@
+---
+title: "Chapter 7 Practice"
+author: "Tammy Lightle"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+## 8.2 Task 1 and Task 2
+```{r}
+getwd()
+list.files()
+```
+I do not see a difference in file paths when I run this in the console vs the knit, which tells me that the working directory is set to the same location as my R notebook.
+
+## 8.2 Task 3
+```{r}
+library(dslabs)
+library(readr)
+library(readxl)
+```
+
+## 8.2 Task 4 and Task 5
+```{r}
+data("mtcars")
+data("movielens", package = "dslabs")
+```
+
+## 8.2 Task 6 and Task 7
+```{r}
+dplace_df <- read_csv("Values_Transport_dplace.csv")
+car_prices_df <- read_excel("car_prices.xlsx")
+```
+
+

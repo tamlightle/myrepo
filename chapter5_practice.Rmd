@@ -1,0 +1,106 @@
+---
+title: "Chapter 5 Practice"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Hack-A-Prompt
+
+## Prompt draft
+
+Persona: Act as a R programmer.
+Task: Help me write a block of R code meeting these specifications: 
+
+- define a `sales_q1` collection with the values 120, 135, 150, and 160
+
+- define a `sales_q2` collection with the values 125, 130, 155, and 170
+
+- define `growth` by taking the difference between `sales_q2` and `sales_q1`
+
+- define `positive_growth` by taking all positive values from `growth`
+
+- define `last_two` as the final two values in `sales_q2`
+
+- output the length of `sales_q1` and `sales_q2`
+
+- output the class of `growth`
+
+## LLM output
+
+```{r LLM output}
+# Define sales collections
+sales_q1 <- c(120, 135, 150, 160)
+sales_q2 <- c(125, 130, 155, 170)
+
+# Calculate growth (difference between Q2 and Q1)
+growth <- sales_q2 - sales_q1
+
+# Extract positive growth values
+positive_growth <- growth[growth > 0]
+
+# Get the last two values from sales_q2
+last_two <- tail(sales_q2, 2)
+
+# Output the length of both sales collections
+cat("Length of sales_q1:", length(sales_q1), "\n")
+cat("Length of sales_q2:", length(sales_q2), "\n")
+
+# Output the class of growth
+cat("Class of growth:", class(growth), "\n")
+```
+## Output vs target
+
+I used the *boisestate.ai* LLM and the result matched exactly when defining `sales_q1`, `sales_q2`, and `positive_growth`, but it differed on defining `last_two` and it added additional text to the result for the two length outputs and the class output.
+
+I actually like the way it approached defining `last_two` because it is more dynamic if the length of `sales_q2` were to change, but I will have to specify that I only want the values in the third and fourth position in order to get the code to match exactly. 
+
+I will also specify that I only want to print the resulting length values and the class.
+
+## Prompt - revised
+
+Persona: Act as a R programmer.
+Task: Help me write a block of R code meeting these specifications: 
+
+- define a `sales_q1` collection with the values 120, 135, 150, and 160
+
+- define a `sales_q2` collection with the values 125, 130, 155, and 170
+
+- define `growth` by taking the difference between `sales_q2` and `sales_q1`
+
+- define `positive_growth` by taking all positive values from `growth`
+
+- define `last_two` as the third and fourth value in `sales_q2`
+
+- output the value of the length of `sales_q1` and `sales_q2`
+
+- output the name of the class of `growth`
+
+## LLM output - revised
+
+```{r LLM output - revised}
+# Define sales collections
+sales_q1 <- c(120, 135, 150, 160)
+sales_q2 <- c(125, 130, 155, 170)
+
+# Calculate growth (difference between Q2 and Q1)
+growth <- sales_q2 - sales_q1
+
+# Extract positive growth values
+positive_growth <- growth[growth > 0]
+
+# Get the third and fourth values from sales_q2
+last_two <- sales_q2[3:4]
+
+# Output the length values
+length(sales_q1)
+length(sales_q2)
+
+# Output the class name
+class(growth)
+```
+
+## Output vs target - revised
+
+I used the same LLM thread and provided the revised prompt. The result is closer to the goal, with one small difference. The LLM result used sales_q2[3:4] instead of sales_q2[c(3,4)] to define `last_two`. This is a very minimal difference as the resulting vector will be the same in both cases.

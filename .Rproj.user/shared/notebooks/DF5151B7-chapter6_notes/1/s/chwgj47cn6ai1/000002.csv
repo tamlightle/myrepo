@@ -1,0 +1,35 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhblxuYGBgIn0= -->
+
+```r
+mean
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+mean
+```"
+"1","function (x, ...) 
+UseMethod(\"mean\")
+<bytecode: 0x000001c1358e7be8>
+<environment: namespace:base>
+"
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3Vyc2VkX3NlcSA8LSBjKDQsIDgsIDE1ICwxNiAsMjMgLDQyKVxuXG5tZWFuKGN1cnNlZF9zZXEpXG5gYGAifQ== -->
+
+```r
+cursed_seq <- c(4, 8, 15 ,16 ,23 ,42)
+
+mean(cursed_seq)
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+cursed_seq <- c(4, 8, 15 ,16 ,23 ,42)
+
+mean(cursed_seq)
+```"
+"1","[1] 18
+"

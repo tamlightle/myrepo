@@ -1,0 +1,8 @@
+"0","set.seed(21)"
+"0","mean_of_five <- mean(sample(scores, 5), na.rm = TRUE)"
+"0",""
+"0","mean_of_five"
+"1","[1]"
+"1"," 72.4"
+"1","
+"

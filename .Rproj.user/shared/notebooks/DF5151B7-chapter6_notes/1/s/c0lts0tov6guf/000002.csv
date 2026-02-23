@@ -1,0 +1,28 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGlzLm5hKExhcmdlVmVjKSlcbmBgYCJ9 -->
+
+```r
+sum(is.na(LargeVec))
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+sum(is.na(LargeVec))
+```"
+"1","[1] 10
+"
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihpcy5uYShMYXJnZVZlYykpXG5gYGAifQ== -->
+
+```r
+mean(is.na(LargeVec))
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+mean(is.na(LargeVec))
+```"
+"1","[1] 0.5
+"
