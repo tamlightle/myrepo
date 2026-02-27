@@ -1,0 +1,145 @@
+---
+title: "Chapter 8 Notes: Bracket Indexing"
+author: "Tammy Lightle"
+date: "`r Sys.Date()`"
+output: html_notebook
+---
+
+## Load Data
+```{r}
+library(readr)
+field_sightings <- read_csv("field_sightings.csv")
+```
+
+## Positional Indexing
+```{r}
+z <- c(10,20,30,40,50)
+z[1]
+z[3]
+z[2:4]
+
+field_sightings[1:6, ]
+
+head(field_sightings, n = 3)
+```
+## Names Indexing
+```{r}
+nerdy_palette <- c(
+  "Octarine"      = "#7F00FF",
+  "TARDIS Blue"   = "#003B6F",
+  "Rebeccapurple" = "#663399",
+  "Hooloovoo"     = "#4F97A3",
+  "Cosmic Latte"  = "#FFF8E7",
+  "Vantablack"    = "#000000",
+  "Matrix Green"  = "#03A062",
+  "Source Engine Magenta" = "#FF00FF",
+  "Command Red"   = "#CC0000",
+  "Impossible Green" = "#4D9E68"
+  )
+
+nerdy_palette["Octarine"]
+```
+```{r}
+field_sightings["Band_Color"]
+field_sightings[ , "Band_Color"]
+field_sightings[, "Band_Color", drop = FALSE]
+```
+All the results are the same. In the last line, `drop = FALSE` keeps the result a dataframe, not a vector. I asked chatgpt to explain why subsetting a single column from `filed_sightings` using `[ ]` always returned a tibble, even when using `drop = FALSE` or not specifying it. The explanation returned is that `field_sightings` is a `spec_tbl_df` tibble (created by `readr::read_csv()`), which inherits from `data.frame` but overrides the default subsetting rules: tibbles never drop dimensions when using `[ ]`, so single-column selections always return a tibble. In tidyverse workflows, to get a vector from a single column, you should use `[[ ]]` or `$`.
+
+## Logical Mask Indexing
+```{r}
+number_list <- c(10,25,5,30,15,40)
+print(number_list)
+
+mask <- number_list <= 20
+print(mask)
+
+smaller <- number_list[mask]
+print(smaller)
+
+smaller <- number_list[number_list <= 20]
+print(smaller)
+```
+```{r}
+mask_tagged <- field_sightings[, "Status"] == "Tagged"
+head(mask_tagged)
+
+#tagged_only <- field_sightings[field_sightings$Status == "Tagged"]
+#tried to do this differently...
+
+tagged_only <- field_sightings[field_sightings[, "Status"] == "Tagged",]
+head(tagged_only)
+
+nrow(field_sightings)
+nrow(tagged_only)
+
+sum(mask_tagged, na.rm = TRUE)
+```
+```{r}
+row_idx_tagged <- which(field_sightings[, "Status"] == "Tagged")
+
+tagged_only <- field_sightings[row_idx_tagged, ]
+nrow(tagged_only)
+
+head(tagged_only, 10)
+```
+
+## Extraction
+Extraction means pulling out a single component. The operator is `[[ ]]`.
+```{r}
+field_sightings[["Band_Color"]]
+unique(field_sightings[["Band_Color"]])
+```
+```{r}
+field_sightings$Band_Color
+```
+```{r}
+col_name <- "Band_Color"
+field_sightings[[col_name]]
+field_sightings$col_name
+```
+
+## Subassignment (replacement)
+```{r}
+reintroduction <- field_sightings
+indices_untagged <- which(reintroduction[, "Status"] == "Untagged")
+reintroduction[indices_untagged, "Status"] <- "Wild Hatch"
+
+unique(reintroduction[, "Status"])
+unique(field_sightings$Status)
+```
+```{r}
+reintroduction2 <- field_sightings
+
+new_col <- "Tag_Flag"
+reintroduction2[[new_col]] <- 0
+
+idx_tagged <- which(reintroduction2[, "Status"] == "Tagged")
+reintroduction2[idx_tagged, new_col] <- 1
+
+head(reintroduction2)
+```
+
+```{r}
+reintroduction3 <- field_sightings
+
+reintroduction3$Tag_Flag <- 0
+
+idx_tagged <- which(reintroduction3[, "Status"] == "Tagged")
+reintroduction3[idx_tagged, "Tag_Flag"] <- 1
+
+head(reintroduction3)
+```
+
+## Code Chunk Options
+```{r, echo=TRUE, results='hide'}
+field_sightings[["Band_Color"]]
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+field_sightings$col_name
+```
+
+```{r, eval=FALSE, echo=TRUE}
+field_sightings$Band_Color
+```
+

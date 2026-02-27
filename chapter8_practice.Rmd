@@ -1,0 +1,84 @@
+---
+title: "Chapter 8 Practice"
+author: "Tammy Lightle"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Task 1: Load CSV
+```{r, results='hide'}
+list.files()
+library(readr)
+values_transport <- read_csv("Values_Transport_dplace.csv")
+```
+## Task 2: Positional subsetting
+```{r}
+first_10_basic <- values_transport[1:10, 2:5]
+```
+
+`values_transport` has 7 columns, and `first_10_basic` has 4 columns.
+
+## Task 3: Names/character subsetting
+```{r}
+id_name_year <- values_transport[, c("id", "name", "year")]
+
+#check
+names(id_name_year)
+head(id_name_year)
+```
+
+## Task 4: Logical mask subsetting
+```{r}
+idx_1900 <- which(values_transport[, "year"] >= 1900)
+values_1900 <- values_transport[idx_1900, ]
+
+# check
+nrow(values_transport)
+nrow(values_1900)
+```
+There are 120 years in the orginal dataset that are greater than or equal to 1900.
+
+## Task 5: Explain missing value propagation
+Not accounting for `NAs` when doing computations and comparisons can lead to errors due to the `NA` values "carrying through." When a comparison involves `NA` (ex. `NA >= 1900`), R will return a `NA` instead of `TRUE` or `FALSE`. Therefore, if using a logical mask for subsetting, the result will pull all `TRUE` and `NA` values.
+Using `which()` can alleviate this behavior because the result returns the indices of the `TRUE` elements, and not those of `FALSE` or `NA`.
+
+```{r}
+mask <- values_transport[, "year"] >= 1900
+unique(mask)
+```
+In this case, using mask would have worked because there were no `NA` years in `values_transport`. However, it is a good thing to keep in mind because real datasets are often not clean.
+
+## Task 6: Extraction
+```{r}
+year_vector <- values_transport[["year"]]
+table(year_vector)
+
+unique(year_vector)
+```
+Gasp! There are two negative years. QC needed!
+
+## Task 7: Overwrite
+```{r}
+transport_year_clean <- values_transport
+
+# get row for each wrong year
+idx_621 <- which(transport_year_clean[, "year"] == -621)
+idx_1750 <- which(transport_year_clean[, "year"] == -1750)
+idx_110 <- which(transport_year_clean[, "year"] == 110)
+idx_1292 <- which(transport_year_clean[, "year"] == 1292)
+
+# replace incorrect values
+transport_year_clean[idx_621, "year"] <- 1821
+transport_year_clean[idx_1750, "year"] <- 1750
+transport_year_clean[idx_110, "year"] <- 1910
+transport_year_clean[idx_1292, "year"] <- 1892
+
+unique(transport_year_clean[["year"]])
+
+```
+Ahhhh, the world is in order again. Data wrangler to the rescue (yet again...).
+
+First, I made a copy so that I didn't write over the original dataset, and can always get back to it if things go awry. Then, I used which() to learn the row indices and saved those indices to individual variables. Finally, I used the variable to replace the incorrect value with the correct value.
+
